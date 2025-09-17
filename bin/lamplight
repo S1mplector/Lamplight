@@ -3,7 +3,9 @@
 # This entrypoint will progressively source modules under lib/ and run the CLI.
 # For now, it falls back to the legacy journal.sh while migration is in progress.
 
-set -euo pipefail
+# Strict error settings can cause interactive TUIs to exit on benign non-zero statuses
+# Keep -u for catching unbound variables; avoid -e and pipefail here.
+set -u
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
@@ -21,6 +23,9 @@ for f in \
   "$ROOT_DIR/lib/domain/notebook.sh" \
   "$ROOT_DIR/lib/usecase/new_entry.sh" \
   "$ROOT_DIR/lib/usecase/list_entries.sh" \
+  "$ROOT_DIR/lib/usecase/manage_entries.sh" \
+  "$ROOT_DIR/lib/usecase/mood_stats.sh" \
+  "$ROOT_DIR/lib/usecase/notebooks.sh" \
   "$ROOT_DIR/lib/interface/cli/menu.sh"; do
   [[ -f "$f" ]] && source "$f"
 done
