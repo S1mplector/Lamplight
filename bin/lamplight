@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Lamplight entrypoint (Clean Architecture scaffold)
+# This entrypoint will progressively source modules under lib/ and run the CLI.
+# For now, it falls back to the legacy journal.sh while migration is in progress.
+
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+# Load config first
+if [[ -f "$ROOT_DIR/lib/config.sh" ]]; then
+  # shellcheck source=/dev/null
+  source "$ROOT_DIR/lib/config.sh"
+fi
+
+# Load infrastructure and use cases
+for f in \
+  "$ROOT_DIR/lib/infrastructure/ui_tui.sh" \
+  "$ROOT_DIR/lib/infrastructure/editor.sh" \
+  "$ROOT_DIR/lib/domain/entry.sh" \
+  "$ROOT_DIR/lib/domain/notebook.sh" \
+  "$ROOT_DIR/lib/usecase/new_entry.sh" \
+  "$ROOT_DIR/lib/usecase/list_entries.sh" \
+  "$ROOT_DIR/lib/interface/cli/menu.sh"; do
+  [[ -f "$f" ]] && source "$f"
+done
+
+# Fallback to legacy while we migrate functionality
+if declare -F lamplight_main >/dev/null 2>&1; then
+  lamplight_main "$@"
+else
+  # If shim is not available, run legacy script
+  if [[ -f "$ROOT_DIR/journal.sh" ]]; then
+    exec "$ROOT_DIR/journal.sh"
+  else
+    echo "Lamplight: no CLI available (missing lamplight_main and journal.sh)" >&2
+    exit 1
+  fi
+fi
