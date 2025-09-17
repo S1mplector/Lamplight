@@ -1,6 +1,6 @@
 # Lamplight
 
-A refactor of `journal.sh` into a cleanly layered Bash application.
+A light-weight Bash journal & mood tracker.
 
 ## Goals
 
