@@ -43,11 +43,15 @@ usecase_manage_entries() {
     local choice=""
     while true; do
       _animate_header_frame "$title_y" "$title_x" "$heart_y" "$heart_x" "$info_y" "$time"
-      if read -rsn1 -t 0.1 key; then
+      # Non-blocking read; macOS Bash 3.2 doesn't support fractional timeouts
+      if read -rsn1 -t 0 key; then
         choice="$key"; break
       fi
+      sleep 0.1
       (( time++ ))
     done
+    # Restore terminal before processing the choice
+    stty "$_old_stty"
     echo
 
     case "$choice" in

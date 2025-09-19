@@ -188,7 +188,8 @@ _live_editor() {
         if [[ "$is_read_only" == "true" ]]; then
             if [[ "$key" == "q" ]]; then break; fi
              if [[ "$key" == $'\e' ]]; then
-                read -rsn2 -t 0.01 seq
+                # macOS Bash 3.2: use non-blocking read; no fractional timeout support
+                read -rsn2 -t 0 seq
                 case "$seq" in
                     '[A') (( cur_line > 0 )) && (( cur_line-- )) ;;
                     '[B') (( cur_line < ${#lines[@]} - 1 )) && (( cur_line++ )) ;;
@@ -201,7 +202,8 @@ _live_editor() {
 
         case "$key" in
             $'\e')
-                read -rsn2 -t 0.01 seq
+                # macOS Bash 3.2: use non-blocking read; no fractional timeout support
+                read -rsn2 -t 0 seq
                 case "$seq" in
                     '[A') (( cur_line > 0 )) && (( cur_line-- )) ;;
                     '[B') (( cur_line < ${#lines[@]} - 1 )) && (( cur_line++ )) ;;

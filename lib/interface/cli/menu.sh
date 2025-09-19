@@ -28,14 +28,22 @@ main_menu() {
     echo -n "Select: "
 
     local choice=""
+    # Enable raw-like mode during key polling so single keypresses are captured immediately
+    local _old_stty
+    _old_stty=$(stty -g)
+    stty -echo -icanon
     while true; do
       _animate_header_frame "$title_y" "$title_x" "$heart_y" "$heart_x" "$info_y" "$time"
-      if read -rsn1 -t 0.1 key; then
+      # macOS Bash 3.2 doesn't support fractional timeouts; use non-blocking read and sleep
+      if read -rsn1 -t 0 key; then
         choice="$key"
         break
       fi
+      sleep 0.1
       (( time++ ))
     done
+    # Restore terminal mode before handling the choice (sub-menus may use line reads)
+    stty "$_old_stty"
     echo
 
     case "$choice" in
