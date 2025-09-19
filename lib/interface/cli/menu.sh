@@ -38,8 +38,7 @@ main_menu() {
     while true; do
       _animate_header_frame "$title_y" "$title_x" "$heart_y" "$heart_x" "$info_y" "$time"
       # macOS Bash 3.2 doesn't support fractional timeouts; use non-blocking read and sleep
-      if read -rsn1 -t 0 key; then
-        choice="$key"
+      if read -rsn1 -t 0 choice; then
         break
       fi
       sleep 0.1
