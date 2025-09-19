@@ -4,13 +4,16 @@
 main_menu() {
   trap 'tput cnorm' EXIT INT TERM
   init_dir
+  # Show large ASCII clock only on the main menu
+  SHOW_BIG_CLOCK=1
   local time=0
   while true; do
     clear
     local title_y title_x heart_y heart_x info_y
     read -r title_y title_x heart_y heart_x info_y < <(_draw_static_header)
 
-    local menu_y=$((info_y + 2))
+    # Leave space for 5-row big clock (rows start at info_y)
+    local menu_y=$((info_y + 7))
     tput cup "$menu_y" 0
     echo -e "  ${YELLOW}1${NC}) New entry"
     echo -e "  ${YELLOW}2${NC}) List entries"
@@ -65,6 +68,7 @@ main_menu() {
       *) echo "Invalid choice"; sleep 1 ;;
     esac
   done
+  unset SHOW_BIG_CLOCK
 }
 
 lamplight_main() {
