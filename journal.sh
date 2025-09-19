@@ -135,7 +135,8 @@ _redraw_lines() {
     local output; output="$(tput civis)"
     for i in $(seq 0 $((editor_height - 1))); do
         output+="$(tput cup $((3 + i)) 0)$(tput el)"
-        if [[ -v "_lines[i]" ]]; then
+        # Portable array element existence check (works on Bash 3.2 on macOS)
+        if [[ -n "${_lines[i]+_}" ]]; then
             output+="  ${_lines[i]}"
         fi
     done
