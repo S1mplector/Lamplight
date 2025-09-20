@@ -18,6 +18,7 @@ GREEN=$'\e[32m'
 CYAN=$'\e[36m'
 RED=$'\e[31m'
 MAGENTA=$'\e[35m'
+WHITE=$'\e[97m'
 
 THIN='-'
 THICK='='

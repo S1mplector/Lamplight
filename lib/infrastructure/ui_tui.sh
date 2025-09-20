@@ -24,8 +24,8 @@ _draw_static_header() {
   local title_y=1
   local title_x=2
   local border top_bottom
-  border=$(printf "%*s" "${#title_text}" "" | tr ' ' '-')
-  top_bottom="+${border}+"
+  border=$(printf "%*s" "${#title_text}" "" | tr ' ' '─')
+  top_bottom="┌${border}┐"
 
   {   # All drawing goes to stderr; stdout will only contain coordinates
     tput cup 0 0; tput ed
@@ -33,7 +33,7 @@ _draw_static_header() {
     tput cup $title_y $title_x; printf "%s" "$top_bottom"
     # Middle line intentionally without side bars; animated title will draw its own pipes
     tput cup $((title_y + 1)) $title_x; printf "%*s" "${#title_text}" ""
-    tput cup $((title_y + 2)) $title_x; printf "%s" "$top_bottom"
+    tput cup $((title_y + 2)) $title_x; printf "%s" "└${border}┘"
   } >&2
 
   # Output: coordinates for the dynamic elements (stdout only)
@@ -67,17 +67,17 @@ _animate_header_frame() {
   tput cup "$info_y" 0; tput el
   if [[ "${SHOW_BIG_CLOCK:-0}" == "1" ]]; then
     # Left side: notebook label only
-    printf "${MAGENTA}Notebook: ${YELLOW}%s${NC}" "$ACTIVE_NOTEBOOK_NAME"
+    printf "${WHITE}Notebook: ${YELLOW}%s${NC}" "$ACTIVE_NOTEBOOK_NAME"
     # Right side: big ASCII clock
     local cols; cols=$(tput cols)
     # Let the renderer compute exact width and center within left half; pass -2 as sentinel
     if ! _render_big_clock "$((info_y + 1))" -2; then
       # Too narrow for big clock, fall back to compact inline time
-      tput cup "$info_y" 0; tput el; printf "${MAGENTA}Notebook: ${YELLOW}%s${NC}   ${MAGENTA}%s${NC}" "$ACTIVE_NOTEBOOK_NAME" "$(date '+%Y-%m-%d %H:%M:%S')"
+      tput cup "$info_y" 0; tput el; printf "${WHITE}Notebook: ${YELLOW}%s${NC}   ${WHITE}%s${NC}" "$ACTIVE_NOTEBOOK_NAME" "$(date '+%Y-%m-%d %H:%M:%S')"
     fi
   else
     # Fallback compact inline time
-    printf "${MAGENTA}Notebook: ${YELLOW}%s${NC}   ${MAGENTA}%s${NC}" "$ACTIVE_NOTEBOOK_NAME" "$(date '+%Y-%m-%d %H:%M:%S')"
+    printf "${WHITE}Notebook: ${YELLOW}%s${NC}   ${WHITE}%s${NC}" "$ACTIVE_NOTEBOOK_NAME" "$(date '+%Y-%m-%d %H:%M:%S')"
   fi
 
   tput rc
