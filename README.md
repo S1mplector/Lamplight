@@ -1,39 +1,69 @@
 # Lamplight
 
-A light-weight Bash journal & mood tracker.
+Your terminal-native journal and mood tracker. Fast, minimal, and keyboard-driven.
 
-## Goals
+Lamplight lets you capture daily thoughts, track mood over time, and organize entries in notebooks — all from a beautiful TUI that runs anywhere Bash runs.
 
-- Separate concerns across configuration, domain, use cases, infrastructure (UI/editor), and interface (CLI)
-- Maintain a single entrypoint: `bin/lamplight`
-- Migrate functionality incrementally while keeping the app runnable
+![Lamplight main interface](lib/docs/images/main_interface.png)
 
-## Architecture (Clean-ish in Bash)
+## What you can do
 
-- `bin/`
-  - `lamplight` — entrypoint; loads modules and starts the app
-- `lib/`
-  - `config.sh` — configuration, constants, init
-  - `domain/` — pure logic: entry formatting, notebook helpers
-  - `usecase/` — orchestrations: create/list/edit entries, mood stats, notebook management
-  - `infrastructure/` — IO and environment: TUI helpers, editor
-  - `interface/cli/` — CLI wiring (menus)
+- **Capture entries quickly**
+  - One-key “New entry” flow with a lightweight live editor (no external editor required)
+  - Auto-stamped headers: date, mood, optional title
 
-## Migration plan
+- **Track your mood**
+  - Enter free text or a numeric mood (1–10)
+  - **Mood stats** summarize your distribution at a glance
 
-1. Scaffold (this commit): repo structure, entrypoint, shims
-2. Extract config/init from `journal.sh` into `lib/config.sh` and use from CLI
-3. Extract TUI UI and live editor into `lib/infrastructure/`
-4. Extract domain helpers (entry/notebook)
-5. Extract use cases and rewire the menu in `interface/cli/menu.sh`
-6. Remove legacy `journal.sh` dependence once all features are migrated
+- **Organize with notebooks**
+  - Create, switch, and delete notebooks to separate themes/projects
+  - Active notebook is remembered between sessions
 
-## Usage
+- **Manage past entries**
+  - List entries with date, mood, and title
+  - View, edit, or delete any entry from the TUI
 
-- Run with:
+- **Polished terminal UI**
+  - Flicker-free header with subtle animation
+  - Clear keyboard hints and responsive menus
+
+## Quick start
+
+Requirements: Bash (macOS/Linux), a standard terminal, and basic POSIX tools.
+
+Run the app:
 
 ```bash
 bash bin/lamplight
 ```
 
-- During migration, the entrypoint will fall back to `journal.sh`.
+Keyboard basics:
+
+- In menus: press the number key to choose
+- In editor: arrows to move, Enter for newline, Backspace to delete, Ctrl+D to save and finish
+
+Your data lives under `~/JournalEntries/` (organized by notebook).
+
+## Project structure
+
+- `bin/`
+  - `lamplight` — single entrypoint; loads modules and starts the app
+- `lib/`
+  - `config.sh` — configuration, constants, initialization
+  - `domain/` — pure logic: entry formatting, notebook helpers
+  - `usecase/` — orchestrations: create/list/edit entries, mood stats, notebook management
+  - `infrastructure/` — IO and environment: TUI helpers, live editor
+  - `interface/cli/` — CLI wiring (menus)
+- `journal.sh` — legacy monolithic script (kept for compatibility during migration)
+
+## Notes
+
+- Lamplight remembers your currently active notebook (`~/.simjournal_active_notebook`).
+- If the modular entrypoint is unavailable, the app can fall back to the legacy flow to keep things running.
+
+## Roadmap (high-level)
+
+- Richer search/filter over entries
+- Export/import utilities
+- Optional external-editor integration
