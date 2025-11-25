@@ -1,5 +1,8 @@
 # Lamplight
 
+> Status: Development of Lamplight has ended. This project is no longer in active development.
+
+
 Your terminal-native journal and mood tracker. Fast, minimal, and keyboard-driven.
 
 Lamplight lets you capture daily thoughts, track mood over time, and organize entries in notebooks — all from a beautiful TUI that runs anywhere Bash runs.
