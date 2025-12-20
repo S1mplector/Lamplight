@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ──────────────────────────────────────────────────────────────────
-#   SimJournal – lightweight Bash journal & mood tracker (v3)
+#   Lamplight – lightweight Bash journal & mood tracker (v3)
 #   • Stores entries under ~/JournalEntries/
 #   • Features: new entry, edit/view, mood stats, notebook management
 #   • Live, animated, flicker-free UI

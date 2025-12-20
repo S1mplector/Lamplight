@@ -23,6 +23,7 @@ for f in \
   "$ROOT_DIR/lib/domain/notebook.sh" \
   "$ROOT_DIR/lib/usecase/new_entry.sh" \
   "$ROOT_DIR/lib/usecase/list_entries.sh" \
+  "$ROOT_DIR/lib/usecase/search_entries.sh" \
   "$ROOT_DIR/lib/usecase/manage_entries.sh" \
   "$ROOT_DIR/lib/usecase/mood_stats.sh" \
   "$ROOT_DIR/lib/usecase/notebooks.sh" \

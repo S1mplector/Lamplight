@@ -26,6 +26,9 @@ Lamplight lets you capture daily thoughts, track mood over time, and organize en
 - **Manage past entries**
   - List entries with date, mood, and title
   - View, edit, or delete any entry from the TUI
+- **Search your history**
+  - Filter by date range, mood (number/keyword), and text query
+  - Search within the active notebook or across all notebooks
 
 - **Polished terminal UI**
   - Flicker-free header with subtle animation

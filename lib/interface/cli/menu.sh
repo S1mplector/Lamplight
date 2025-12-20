@@ -17,15 +17,16 @@ main_menu() {
     tput cup "$menu_y" 0
     echo -e "  ${YELLOW}1${NC}) New entry"
     echo -e "  ${YELLOW}2${NC}) List entries"
-    echo -e "  ${YELLOW}3${NC}) Manage entries"
-    echo -e "  ${YELLOW}4${NC}) Mood stats"
-    echo -e "  ${YELLOW}5${NC}) Switch notebook"
-    echo -e "  ${YELLOW}6${NC}) Create notebook"
-    echo -e "  ${YELLOW}7${NC}) Delete notebook"
+    echo -e "  ${YELLOW}3${NC}) Search/filter entries"
+    echo -e "  ${YELLOW}4${NC}) Manage entries"
+    echo -e "  ${YELLOW}5${NC}) Mood stats"
+    echo -e "  ${YELLOW}6${NC}) Switch notebook"
+    echo -e "  ${YELLOW}7${NC}) Create notebook"
+    echo -e "  ${YELLOW}8${NC}) Delete notebook"
     echo -e "  ${YELLOW}0${NC}) Exit"
 
-    # Calculate prompt position dynamically: number of menu lines (8) + some spacing
-    local menu_lines=8
+    # Calculate prompt position dynamically: number of menu lines (9) + some spacing
+    local menu_lines=9
     local prompt_y=$((menu_y + menu_lines + 1))
     tput cup "$prompt_y" 0
     echo -n "Select: "
@@ -58,11 +59,12 @@ main_menu() {
         echo
         press_any
         ;;
-      3) usecase_manage_entries ;;
-      4) usecase_mood_stats ;;
-      5) usecase_switch_notebook ;;
-      6) usecase_create_notebook ;;
-      7) usecase_delete_notebook ;;
+      3) usecase_search_entries ;;
+      4) usecase_manage_entries ;;
+      5) usecase_mood_stats ;;
+      6) usecase_switch_notebook ;;
+      7) usecase_create_notebook ;;
+      8) usecase_delete_notebook ;;
       0) break ;;
       *) echo "Invalid choice"; sleep 1 ;;
     esac
