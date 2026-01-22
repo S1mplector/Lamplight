@@ -45,7 +45,15 @@ Lamplight lets you capture daily thoughts, track mood over time, and organize en
 
 Requirements: Bash 4+ (macOS/Linux), a standard terminal, and basic POSIX tools.
 
-Run the app:
+### Install globally (recommended)
+
+```bash
+bash install.sh
+```
+
+This adds `lamplight` to your PATH so you can run it from anywhere.
+
+### Or run directly
 
 ```bash
 bash bin/lamplight
