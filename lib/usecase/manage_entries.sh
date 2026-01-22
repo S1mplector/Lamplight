@@ -22,6 +22,9 @@ usecase_manage_entries() {
   local entry_basename; entry_basename=$(basename "$entry_path")
 
   local time=0
+  local _old_stty
+  _old_stty=$(stty -g)
+  
   while true; do
     clear
     local title_y title_x heart_y heart_x info_y
@@ -41,16 +44,15 @@ usecase_manage_entries() {
     echo -n "Select: "
 
     local choice=""
+    stty -echo -icanon
     while true; do
       _animate_header_frame "$title_y" "$title_x" "$heart_y" "$heart_x" "$info_y" "$time"
-      # Non-blocking read; macOS Bash 3.2 doesn't support fractional timeouts
       if read -rsn1 -t 0 key; then
         choice="$key"; break
       fi
       sleep 0.1
       (( time++ ))
     done
-    # Restore terminal before processing the choice
     stty "$_old_stty"
     echo
 
