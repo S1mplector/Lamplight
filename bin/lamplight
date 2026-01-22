@@ -27,6 +27,8 @@ for f in \
   "$ROOT_DIR/lib/usecase/manage_entries.sh" \
   "$ROOT_DIR/lib/usecase/mood_stats.sh" \
   "$ROOT_DIR/lib/usecase/notebooks.sh" \
+  "$ROOT_DIR/lib/usecase/export_import.sh" \
+  "$ROOT_DIR/lib/usecase/settings.sh" \
   "$ROOT_DIR/lib/interface/cli/menu.sh"; do
   [[ -f "$f" ]] && source "$f"
 done
